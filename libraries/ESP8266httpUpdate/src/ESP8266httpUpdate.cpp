@@ -45,7 +45,7 @@ ESP8266HTTPUpdate::~ESP8266HTTPUpdate(void)
 
 #ifdef HTTPUPDATE_1_2_COMPATIBLE
 HTTPUpdateResult ESP8266HTTPUpdate::update(const String& url, const String& currentVersion,
-        const String& httpsFingerprint, bool reboot)
+        const String& httpsFingerprint, bool reboot, const char * apiKey)
 {
     rebootOnUpdate(reboot);
 #pragma GCC diagnostic push
@@ -54,88 +54,88 @@ HTTPUpdateResult ESP8266HTTPUpdate::update(const String& url, const String& curr
 #pragma GCC diagnostic pop
 }
 
-HTTPUpdateResult ESP8266HTTPUpdate::update(const String& url, const String& currentVersion)
+HTTPUpdateResult ESP8266HTTPUpdate::update(const String& url, const String& currentVersion, const char * apiKey)
 {
     HTTPClient http;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored  "-Wdeprecated-declarations"
     http.begin(url);
 #pragma GCC diagnostic pop
-    return handleUpdate(http, currentVersion, false);
+    return handleUpdate(http, currentVersion, false, apiKey);
 }
 
 HTTPUpdateResult ESP8266HTTPUpdate::update(const String& url, const String& currentVersion,
-        const String& httpsFingerprint)
+        const String& httpsFingerprint, const char * apiKey)
 {
     HTTPClient http;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored  "-Wdeprecated-declarations"
     http.begin(url, httpsFingerprint);
 #pragma GCC diagnostic pop
-    return handleUpdate(http, currentVersion, false);
+    return handleUpdate(http, currentVersion, false, apiKey);
 }
 
 HTTPUpdateResult ESP8266HTTPUpdate::update(const String& url, const String& currentVersion,
-        const uint8_t httpsFingerprint[20])
+        const uint8_t httpsFingerprint[20], const char * apiKey)
 {
     HTTPClient http;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored  "-Wdeprecated-declarations"
     http.begin(url, httpsFingerprint);
 #pragma GCC diagnostic pop
-    return handleUpdate(http, currentVersion, false);
+    return handleUpdate(http, currentVersion, false, apiKey);
 }
 #endif
 
-HTTPUpdateResult ESP8266HTTPUpdate::update(WiFiClient& client, const String& url, const String& currentVersion)
+HTTPUpdateResult ESP8266HTTPUpdate::update(WiFiClient& client, const String& url, const String& currentVersion, const char * apiKey)
 {
     HTTPClient http;
     http.begin(client, url);
-    return handleUpdate(http, currentVersion, false);
+    return handleUpdate(http, currentVersion, false, apiKey);
 }
 
 #ifdef HTTPUPDATE_1_2_COMPATIBLE
-HTTPUpdateResult ESP8266HTTPUpdate::updateSpiffs(const String& url, const String& currentVersion, const String& httpsFingerprint)
+HTTPUpdateResult ESP8266HTTPUpdate::updateSpiffs(const String& url, const String& currentVersion, const String& httpsFingerprint, const char * apiKey)
 {
     HTTPClient http;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored  "-Wdeprecated-declarations"
     http.begin(url, httpsFingerprint);
 #pragma GCC diagnostic pop
-    return handleUpdate(http, currentVersion, true);
+    return handleUpdate(http, currentVersion, true, apiKey);
 }
 
-HTTPUpdateResult ESP8266HTTPUpdate::updateSpiffs(const String& url, const String& currentVersion, const uint8_t httpsFingerprint[20])
+HTTPUpdateResult ESP8266HTTPUpdate::updateSpiffs(const String& url, const String& currentVersion, const uint8_t httpsFingerprint[20], const char * apiKey)
 {
     HTTPClient http;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored  "-Wdeprecated-declarations"
     http.begin(url, httpsFingerprint);
 #pragma GCC diagnostic pop
-    return handleUpdate(http, currentVersion, true);
+    return handleUpdate(http, currentVersion, true, apiKey);
 }
 
-HTTPUpdateResult ESP8266HTTPUpdate::updateSpiffs(const String& url, const String& currentVersion)
+HTTPUpdateResult ESP8266HTTPUpdate::updateSpiffs(const String& url, const String& currentVersion, const char * apiKey)
 {
     HTTPClient http;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored  "-Wdeprecated-declarations"
     http.begin(url);
 #pragma GCC diagnostic pop
-    return handleUpdate(http, currentVersion, true);
+    return handleUpdate(http, currentVersion, true, apiKey);
 }
 #endif
 
-HTTPUpdateResult ESP8266HTTPUpdate::updateSpiffs(WiFiClient& client, const String& url, const String& currentVersion)
+HTTPUpdateResult ESP8266HTTPUpdate::updateSpiffs(WiFiClient& client, const String& url, const String& currentVersion, const char * apiKey)
 {
     HTTPClient http;
     http.begin(client, url);
-    return handleUpdate(http, currentVersion, true);
+    return handleUpdate(http, currentVersion, true, apiKey);
 }
 
 #ifdef HTTPUPDATE_1_2_COMPATIBLE
 HTTPUpdateResult ESP8266HTTPUpdate::update(const String& host, uint16_t port, const String& uri, const String& currentVersion,
-        bool https, const String& httpsFingerprint, bool reboot)
+        bool https, const String& httpsFingerprint, bool reboot, const char * apiKey)
 {
     (void)https;
     rebootOnUpdate(reboot);
@@ -150,45 +150,45 @@ HTTPUpdateResult ESP8266HTTPUpdate::update(const String& host, uint16_t port, co
 }
 
 HTTPUpdateResult ESP8266HTTPUpdate::update(const String& host, uint16_t port, const String& uri,
-        const String& currentVersion)
+        const String& currentVersion, const char * apiKey)
 {
     HTTPClient http;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored  "-Wdeprecated-declarations"
     http.begin(host, port, uri);
 #pragma GCC diagnostic pop
-    return handleUpdate(http, currentVersion, false);
+    return handleUpdate(http, currentVersion, false, apiKey);
 }
 
 HTTPUpdateResult ESP8266HTTPUpdate::update(const String& host, uint16_t port, const String& url,
-        const String& currentVersion, const String& httpsFingerprint)
+        const String& currentVersion, const String& httpsFingerprint, const char * apiKey)
 {
     HTTPClient http;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored  "-Wdeprecated-declarations"
     http.begin(host, port, url, httpsFingerprint);
 #pragma GCC diagnostic pop
-    return handleUpdate(http, currentVersion, false);
+    return handleUpdate(http, currentVersion, false, apiKey);
 }
 
 HTTPUpdateResult ESP8266HTTPUpdate::update(const String& host, uint16_t port, const String& url,
-        const String& currentVersion, const uint8_t httpsFingerprint[20])
+        const String& currentVersion, const uint8_t httpsFingerprint[20], const char * apiKey)
 {
     HTTPClient http;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored  "-Wdeprecated-declarations"
     http.begin(host, port, url, httpsFingerprint);
 #pragma GCC diagnostic pop
-    return handleUpdate(http, currentVersion, false);
+    return handleUpdate(http, currentVersion, false, apiKey);
 }
 #endif
 
 HTTPUpdateResult ESP8266HTTPUpdate::update(WiFiClient& client, const String& host, uint16_t port, const String& uri,
-        const String& currentVersion)
+        const String& currentVersion, const char * apiKey)
 {
     HTTPClient http;
     http.begin(client, host, port, uri);
-    return handleUpdate(http, currentVersion, false);
+    return handleUpdate(http, currentVersion, false, apiKey);
 }
 
 /**
@@ -253,7 +253,7 @@ String ESP8266HTTPUpdate::getLastErrorString(void)
  * @param currentVersion const char *
  * @return HTTPUpdateResult
  */
-HTTPUpdateResult ESP8266HTTPUpdate::handleUpdate(HTTPClient& http, const String& currentVersion, bool spiffs)
+HTTPUpdateResult ESP8266HTTPUpdate::handleUpdate(HTTPClient& http, const String& currentVersion, bool spiffs, const chat * apiKey )
 {
 
     HTTPUpdateResult ret = HTTP_UPDATE_FAILED;
@@ -270,6 +270,7 @@ HTTPUpdateResult ESP8266HTTPUpdate::handleUpdate(HTTPClient& http, const String&
     http.addHeader(F("x-ESP8266-sketch-md5"), String(ESP.getSketchMD5()));
     http.addHeader(F("x-ESP8266-chip-size"), String(ESP.getFlashChipRealSize()));
     http.addHeader(F("x-ESP8266-sdk-version"), ESP.getSdkVersion());
+    http.addHeader(F("apiKey"), apiKey);
 
     if(spiffs) {
         http.addHeader(F("x-ESP8266-mode"), F("spiffs"));
